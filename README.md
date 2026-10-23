@@ -97,6 +97,23 @@ The crowd policy classification pattern is packaged as an independent module in 
 
 ---
 
+## 🌐 Deployment (Render / Cloud)
+
+CrowdShield AI includes pre-configured deployment blueprints for [Render](https://dashboard.render.com/) and container platforms:
+
+### 1-Click Render Blueprint Deployment
+1. Go to [dashboard.render.com](https://dashboard.render.com/) and select **New + → Blueprint**.
+2. Connect `ALLENKISAIRAKESH/CrowdShield-AI` on branch `main`.
+3. Supply your AWS credentials (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`).
+4. Click **Apply** to automatically provision the web service via [`render.yaml`](render.yaml).
+
+### Manual Web Service on Render
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
+- **Environment Variables:** `PYTHON_VERSION=3.11.9`, `AWS_REGION=us-east-1`, `BEDROCK_MODEL_ID=anthropic.claude-3-haiku-20240307-v1:0`
+
+---
+
 ## 📂 Repository Structure
 ```
 crowdshield-ai/
@@ -104,6 +121,12 @@ crowdshield-ai/
 ├── README.md                  # Project overview and quickstart
 ├── LICENSE                    # MIT Open-Source License
 ├── requirements.txt           # Project dependencies
+├── render.yaml                # Render Blueprint deployment configuration
+├── Dockerfile                 # Production multi-platform container image
+├── .dockerignore              # Docker context exclusions
+├── pytest.ini                 # Pytest configuration
+├── .streamlit/
+│   └── config.toml            # Streamlit theme & production server settings
 ├── .env.example               # Configuration template
 ├── .gitignore                 # Secrets and build ignore rules
 ├── docs/                      # Documentation and hackathon assets
@@ -127,11 +150,12 @@ crowdshield-ai/
 │       ├── decider_client.py
 │       ├── bedrock_agent.py
 │       └── ui_components.py
-└── tests/                     # 100% passing test suite
+└── tests/                     # 100% passing test suite (15/15 tests)
     ├── test_scenarios.py
     ├── test_confidence_policy.py
     ├── test_decider_response.py
     ├── test_error_handling.py
+    ├── test_orchestrator.py
     └── test_result_schema.py
 ```
 
